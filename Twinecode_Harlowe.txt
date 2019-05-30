@@ -1,0 +1,308 @@
+Code for Twine 2.0.11 Harlowe 2 - copy, paste and substitute with your own attributes and values
+
+
+Simple links in Twine 
+
+Use double brackets around a word, sentence, number or syntax to create a new passage or link: 
+[[Door 1.]] [[Hello World]]  [[3]] [[?]]
+
+
+
+Passage links using other forms of syntax
+
+[[Go to the living room->Living Room]]
+
+[[Go to the bedroom->The bedroom]]
+
+[[Basement<-Go to the basement]]
+
+<!--
+this is how you annotate inside your Twine passages -this sentence for example, won't run, it is a comment 
+-->
+
+
+/////////////////////////////////////////////////////////
+
+CSS - Edit Story - Stylesheet
+
+insert background image to your web page 
+
+body {
+	background-image: url("images/alien.jpg");
+	background-size: 100%;
+  background-repeat: no repeat;
+}
+tw-story {
+font-family: 'Arial', monospace;
+color:#ff0000;
+font-size: 2.0em;
+}
+			
+
+<!--with solid background color - use color wheel http://www.w3schools.com/tags/ref_colorpicker.asp -->  
+
+body {
+	background-color: #FFFF99; 
+}
+tw-story {
+font-family: 'Arial', monospace;
+	color: #FFFFFF;
+	font-size: 2.0em;
+}
+
+
+
+
+//Style text directly in passage
+
+(text-colour: blue)[some kind of text]
+
+
+<h2><p><align="right">Some text here</p>
+
+
+/////////////////////////////////////////////////////////
+
+<!-Embedding images directly into passage or web page-->
+
+<img src="images/still6.jpg" alt="imagename" width="600" height="400">
+
+<!-Inserting web url links-->  
+
+(gotoURL:"http://twine2.neocities.org")
+
+//////////////////////////////////////////////////////
+
+<!--USER INPUT NAME -CHOICE 1-->
+(put: (prompt:"What's your name?") into $name)
+Hello (link: $name)[(goto:"Player Character")]
+
+
+<!--Choice 2-->
+Hello (prompt: "What is your name?") 
+<!--consolidated code that runs-->
+
+<!--Choice 3-->
+
+Hello (set: $name to (prompt: "What is your name?")) (print: $name)
+
+
+//////////////////////////////////////////////////
+
+<!--Working with player inputs and conditionals and nested links-->  
+
+(set: $password to (prompt: "What is the password? Hint: The password is a white elegant bird that was once an ugly duckling.") )
+
+(if: $password is "swan")[You are correct. [[Ok now, onwards.]] ](else:)[You are wrong. [[Try again->Enter the password]].]
+
+
+//////////////////////////////////////////
+
+<!--Prose Play-->
+
+<h4><p align="left">I feel (print: (either: "[[amazing]]", "[[shitty]]", "[[giddy]]", "[[woobly]]")) and want to (print: (either: "[[crawl in a dark spot]]", "[[kiss a stranger]]", "[[crawl my wall]]", "[[go for pizza]]", "[[eat Twizzlers]]"))</h4></p>
+
+//////////////////////////////////////////////////////
+
+<!--Hook 1 - changes the properties of a chosen block of text --> 
+
+[Knock, knock, who's there?]<shout| 
+
+(click: ?shout)[ (replace: ?shout)[I am!] ]
+
+
+<!--Hook 2 -click and replace -->
+
+[She shouted, who's there?]<question| 
+
+(click: ?question)[ (replace: ?question)[I am!] ]
+
+<!--As you can see in this text above, ONLY the selected text is replaced with a new text. -->
+
+
+<!--Hook 3 -click and replace -->
+
+(link: "Reveal!")[The curtain rises.]
+
+
+<!--Hook 4 Tiny Hooks -->
+
+The [tree]<c1| is [wild]<c2| with [butterfiles]<c3| swarming [while you ponder]<c4|.
+
+(click: ?c1)[Climb it!]
+(click: ?c2)[Be careful of the surface, it's prickly.]
+(click: ?c3)[Reminding you of the butterflies on your mom's china.]
+(click: ?c4)[Don't ponder too much, you might wake up from your dream!]
+
+
+<!--Hook 5 -->
+ 
+[Follow]<command| 
+(click: ?command)[(replace: ?command)[Be careful and watch your back]]
+
+the 
+
+crumbs...
+
+[...]<c1|
+
+.  [[.]] 
+
+    .   [[..]]  
+
+         .    .   .   .    [[.->Suitcase]]
+
+(click: ?c1)[Gobble, gobble.]
+
+
+
+<!--Hook 6 -->
+((alert: "No, no, you can't go here!")(goto:"Scary Place"))
+
+
+/////////////////////////////////////////////////////////
+
+
+<!--Working with variables and conditionals: Part 2 -->
+
+Example 1: 
+
+(set: $tomorrow to 2)
+
+(if: $tomorrow is 2)[OMG!]
+
+
+Example 2: 
+
+(set: $x to 10)
+(if: $x > 2)[This text is only displayed if $x > 2.]
+
+
+
+Example 3: 
+
+(set: $x to "I love you")
+(set: $y to "I hate you")
+(move: $x into $y)
+(link: $y)[(goto:"Yes")]
+
+
+Example 4: COUNTING HOURS 
+
+Passage 1: Start
+[[What strange world and untold coincidences...]] 
+
+Passage 2: What strange world and untold coincidences...
+(set: $key to (prompt: "What is this game about?")) 
+(if: $key is "strange worlds")[You have successfully entered the nooks and crannies of my soul.]  
+
+First though... you have to do some [[exploring]]. 
+
+Passage 3: exploring
+Even in your explorations, you find yourself longing after those tight shoes that gave you blisters, that glass of water, and that willow tree in the valley. 
+
+(set: $hoursSearch to 3)
+
+[[Search]] 
+
+[[Call Alien in Strangeland]]
+
+Passage 4: Search
+You are standing underneath the willow tree, a rabbit burrows into a pit beside your feet. You slide yourself into it. Your tight shoes tighter than ever. You hurtle towards a pile of dirty shoes at the bottom of the pit. They are covered with chocolate. 
+
+(set: $hoursSearch to $hoursSearch + 1)
+You have been searching $hoursSearch hours.
+(if: $hoursSearch < 6)[[[Search]]]
+[[Call Alien in Strangeland]]
+
+
+Passage 5: Call Alien in Strangeland
+
+(set: $hoursasNumber to "four") 
+(if: $hoursSearch is 5)[(set: $hoursasNumber to "five")]
+(if: $hoursSearch is 6)[(set: $hoursasNumber to "six")] 
+(if: $hoursSearch is 7)[(set: $hoursasNumber to "seven")] 
+(if: $hoursSearch is 8)[(set: $hoursasNumber to "eight")]  
+
+(if: $hoursSearch is 3)[Your head is buzzing with bees. You wake up in bee bites]
+
+(if: $hoursSearch > 3)[You are startled by the rabbit. You take a break from $hoursasNumber hours of exploring.]
+
+
+///////////////////////////////////////////
+Example 5: DATA MAPS
+
+Passage 1: Start
+You are in a room. You see two objects on a desk.
+
+You come [[closer to the desk->desk]] to take a look. 
+
+(set: $badge to (datamap:"name", "badge", "description", "The badge will open a secret corridor.", "pickupText", "You take the badge.", "isCarried", false))
+
+(set: $notebook to (datamap:"name", "notebook", "description", "The notebook contains some secrets about your explorative journey.", "pickupText", "You tuck the notebook inside your jacket.", "isCarried", false))
+
+(set: $selectedItem to "")
+
+
+Passage 2: desk
+(if: $displayLQIntroText is 0)[You are looking down on the desk intently.(set: $displayLQIntroText to 1)]
+
+(if: $badge's isCarried is false)[Your (link: "badge")[   
+(set:$selectedItem to $badge)(goto: "Item Description")] is on the table.](if: $notebook's isCarried is false)[ Your (link: "notebook")[(set:$selectedItem to $notebook)(goto:"Item Description")] is right next to the badge.]
+
+(if: $badge's isCarried is false)[
+(link: "Take badge")[
+(set:$selectedItem to $badge)(set: $badge's isCarried to true)(goto: "Item Acquired")]]
+(if: $notebook's isCarried is false)[
+(link: "Take notebook")[
+(set:$selectedItem to $notebook)(set: $notebook's isCarried to true)(goto: "exit")]]
+
+Passage 3: Item Description
+(print: $selectedItem's description)
+
+[[Done->desk]]
+
+Passage 4: Item Acquired 
+
+(print: $selectedItem's pickupText)
+
+[[Done->desk]]
+
+Passage 5: exit
+You exit the room with your notebook and badge. 
+
+//////////////////////////////////////////////////////////
+
+<!--Shake Macro example -->
+
+(set: $alertText to (font:"Courier New") + (text-style: "shudder") + (colour:"#0033CC"))
+$alertText[This text is red and shuddering.]
+
+/////////////////////////////////////////////////////////
+<!--Inserting audio: insert below in EDIT STORY JAVASCRIPT -->
+
+var audio = document.createElement('audio');
+audio.src = 'sound/soundfilename.m4a';
+audio.loop = true;
+audio.play();
+
+<!--If only in one passage: -->
+Just play this <audio controls>  
+  <source src="sound/beat.ogg" type="audio/ogg">
+</audio> and hear what I mean. 
+
+
+/////////////////////////////////////////////////// 
+<!--Accessibility semantics: insert this in Stylesheet -->
+<<script>>
+     $("#passages a").attr("tabindex", 0);
+<</script>>
+
+
+
+
+
+
+
+
+
